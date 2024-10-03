@@ -9,6 +9,7 @@ This is incomplete!
 7. docket network inspect bsa_assessment_app_network
 8. copy the ip_address of data_provider normally would 172.18.0.4
 9. use the ip_address in the DATA_PROVIDER_URL = http://172.18.0.4:8000
-10. I included a BaseCommand to send POST all data in data_provider:
-11.  docker exec -it data_provider python manage.py post_events_csv --csv_file bsa_data.csv (Warning! This original bsa_data.csv has more than 65k rows)
-12.  celery will automatically fetch the data from data_provider to dashboard_service
+10. This should be updated in docker-compose.yml lines 54 and 72, dashboard_service/settings.py line 162 (then restart docker) 
+11. I included a BaseCommand to send POST all data in data_provider:
+12.  docker exec -it data_provider python manage.py post_events_csv --csv_file bsa_data.csv (Warning! This original bsa_data.csv has more than 65k rows)
+13.  celery will automatically fetch the data from data_provider to dashboard_service

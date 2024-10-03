@@ -1,0 +1,1 @@
+# from .tasks import fetch_and_update_bookings

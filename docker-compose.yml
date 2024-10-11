@@ -52,7 +52,7 @@ services:
       - "8101:8101"
     environment:
       DATABASE_URL: postgres://postgres:postgres@postgres:5432/postgres
-      DATA_PROVIDER_URL: http://172.19.0.4:8100
+      DATA_PROVIDER_URL: http://data_provider:8100
       CELERY_BROKER_URL: redis://redis:6379/0
     depends_on:
       - postgres
@@ -71,7 +71,7 @@ services:
       - ./dashboard_service:/app
     environment:
       DATABASE_URL: postgres://postgres:postgres@postgres:5432/postgres
-      DATA_PROVIDER_URL: http://172.19.0.4:8100
+      DATA_PROVIDER_URL: http://data_provider:8100
       CELERY_BROKER_URL: redis://redis:6379/0
     depends_on:
       - postgres

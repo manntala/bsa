@@ -9,7 +9,6 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-# Define a custom pagination class (optional)
 class EventPagination(PageNumberPagination):
     page_size = 10
     page_size_query_param = 'page_size'
@@ -35,8 +34,9 @@ class EventListCreateView(generics.ListCreateAPIView):
     pagination_class = EventPagination
 
     def perform_create(self, serializer):
-        instance = serializer.save()
         try:
+            instance = serializer.save()
             current_app.send_task('dashboard.tasks.fetch_and_update_bookings')
         except Exception as e:
-            logger.error(f"Error sending task to Celery: {e}")
+            logger.error(f"Error creating event: {e}")
+

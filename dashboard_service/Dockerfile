@@ -25,6 +25,6 @@ COPY . .
 RUN python manage.py collectstatic --noinput
 
 # Expose port
-EXPOSE 8001
+EXPOSE 8101
 
-CMD ["gunicorn", "dashboard_service.wsgi:application", "--bind", "0.0.0.0:8001", "--workers", "3", "--timeout", "120"]
+CMD ["gunicorn", "dashboard_service.wsgi:application", "--bind", "0.0.0.0:8101", "--workers", "3", "--timeout", "120"]

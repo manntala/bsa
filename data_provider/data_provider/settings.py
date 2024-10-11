@@ -154,5 +154,5 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 CELERY_BROKER_URL = 'redis://redis:6379/0'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
-DATA_PROVIDER_URL = "http://172.18.0.4:8000"
+DATA_PROVIDER_URL = "http://172.19.0.4:8100"
 

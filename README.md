@@ -7,8 +7,8 @@ This is incomplete!
 5. docker network ls
 6. and look for the network 'bsa_assessment_app_network'
 7. docket network inspect bsa_assessment_app_network
-8. copy the ip_address of data_provider normally would 172.18.0.4
-9. use the ip_address in the DATA_PROVIDER_URL = http://172.18.0.4:8000
+8. copy the ip_address of data_provider normally would 172.18.1.4
+9. use the ip_address in the DATA_PROVIDER_URL = http://172.18.1.4:8000
 10. This should be updated in docker-compose.yml lines 54 and 72, dashboard_service/settings.py line 162 (then restart docker)
 11. submit a Post data in localhost:8000/events/ and it will be updated in localhost:8001/dashboard/
 12. I included a BaseCommand to send POST all data in data_provider:

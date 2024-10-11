@@ -159,7 +159,7 @@ celery_app.config_from_object('django.conf:settings', namespace='CELERY')
 celery_app.autodiscover_tasks()
 
 # Data Provider URL
-DATA_PROVIDER_URL = "http://172.18.0.4:8000"
+DATA_PROVIDER_URL = "http://172.19.0.4:8100"
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')

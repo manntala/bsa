@@ -12,24 +12,25 @@ services:
     ports:
       - "5432:5432"
     networks:
-      - app_network  # Connect to custom network
+      - app_network
 
   redis:
     image: redis:7
     ports:
-      - "6379:6379"
+      - "6380:6379"
     networks:
-      - app_network  # Connect to custom network
+      - app_network
 
   data_provider:
     build:
       context: ./data_provider
     container_name: data_provider
-    command: ["gunicorn", "data_provider.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "3", "--timeout", "120"]
+    command: >
+      sh -c "sleep 10 && python manage.py migrate && gunicorn data_provider.wsgi:application --bind 0.0.0.0:8100 --workers 3 --timeout 120"
     volumes:
       - ./data_provider:/app
     ports:
-      - "8000:8000"
+      - "8100:8100"
     environment:
       DATABASE_URL: postgres://postgres:postgres@postgres:5432/postgres
       CELERY_BROKER_URL: redis://redis:6379/0
@@ -38,49 +39,50 @@ services:
       - postgres
       - redis
     networks:
-      - app_network  # Connect to custom network
+      - app_network
 
   dashboard_service:
     build:
       context: ./dashboard_service
     container_name: dashboard_service
-    command: ["gunicorn", "dashboard_service.wsgi:application", "--bind", "0.0.0.0:8001", "--workers", "3", "--timeout", "120"]
+    command: ["gunicorn", "dashboard_service.wsgi:application", "--bind", "0.0.0.0:8101", "--workers", "3", "--timeout", "120"]
     volumes:
       - ./dashboard_service:/app
     ports:
-      - "8001:8001"
+      - "8101:8101"
     environment:
       DATABASE_URL: postgres://postgres:postgres@postgres:5432/postgres
-      DATA_PROVIDER_URL: http://172.18.0.4:8000  # Use service name for internal communication
+      DATA_PROVIDER_URL: http://172.19.0.4:8100
       CELERY_BROKER_URL: redis://redis:6379/0
     depends_on:
       - postgres
       - redis
       - data_provider
     networks:
-      - app_network  # Connect to custom network
+      - app_network
 
   celery_worker:
     build:
       context: ./dashboard_service
     container_name: celery_worker
-    command: ["celery", "-A", "dashboard_service", "worker", "-B", "--loglevel=info"]
+    command: >
+      sh -c "python manage.py migrate && celery -A dashboard_service worker -B --loglevel=info"
     volumes:
       - ./dashboard_service:/app
     environment:
       DATABASE_URL: postgres://postgres:postgres@postgres:5432/postgres
-      DATA_PROVIDER_URL: http://172.18.0.4:8000  # Use service name for internal communication
+      DATA_PROVIDER_URL: http://172.19.0.4:8100
       CELERY_BROKER_URL: redis://redis:6379/0
     depends_on:
       - postgres
       - redis
       - data_provider
     networks:
-      - app_network  # Connect to custom network
+      - app_network
 
 volumes:
   postgres_data:
 
 networks:
-  app_network:  # Define custom network
-    driver: bridge  # Use the default bridge driver
+  app_network:
+    driver: bridge

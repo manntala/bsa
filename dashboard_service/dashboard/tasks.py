@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 @shared_task(bind=True, max_retries=5, default_retry_delay=10)
 def fetch_and_update_bookings(self):
     try:
-        response = requests.get(f"{settings.DATA_PROVIDER_URL}/events/")
+        response = requests.get(f"{settings.DATA_PROVIDER_URL}events/")
         response.raise_for_status()
     except requests.RequestException as e:
         logger.error(f"Error fetching events: {e}")

@@ -30,6 +30,7 @@ SECRET_KEY = 'django-insecure-pejt9b@97c+wutyp^f&80@%)p80^ae$(9_06ztq$s^&2_2ctc6
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+CORS_ALLOW_ALL_ORIGINS = True  # Adjust as needed
 
 
 # Application definition
@@ -138,9 +139,6 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
-CORS_ALLOW_ALL_ORIGINS = True  # Adjust as needed
-
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
@@ -159,7 +157,7 @@ celery_app.config_from_object('django.conf:settings', namespace='CELERY')
 celery_app.autodiscover_tasks()
 
 # Data Provider URL
-DATA_PROVIDER_URL = "http://data_provider:8100"
+DATA_PROVIDER_URL = "http://172.19.0.4:8100/"
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
@@ -190,5 +188,3 @@ LOGGING = {
         },
     },
 }
-
-USE_X_FORWARDED_HOST = True

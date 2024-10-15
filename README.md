@@ -1,4 +1,4 @@
-1. cd in bsa_assessment
+1. cd in bsa
 2. docker-compose up --build
 3. submit a Post data in localhost:8100/events/ and it will be updated in localhost:8101/dashboard/
 4. I included a BaseCommand to send POST all data in data_provider:

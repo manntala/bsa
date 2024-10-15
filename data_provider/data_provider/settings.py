@@ -27,6 +27,7 @@ SECRET_KEY = 'django-insecure-f324dw=da43^baw$pm_dvydy=3tad9frtx=zn!6hs9j@5zc1re
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+CORS_ALLOW_ALL_ORIGINS = True
 
 
 # Application definition
@@ -53,14 +54,11 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    # 'data_provider.log_middleware.LoggingMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
-CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'data_provider.urls'
 
@@ -154,5 +152,5 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 CELERY_BROKER_URL = 'redis://redis:6379/0'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
-DATA_PROVIDER_URL = "http://data_provider:8100"
+DATA_PROVIDER_URL = "http://data_provider:8100/"
 

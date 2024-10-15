@@ -35,11 +35,13 @@ services:
       DATABASE_URL: postgres://postgres:postgres@postgres:5432/postgres
       CELERY_BROKER_URL: redis://redis:6379/0
       DEBUG: True
+      ALLOWED_HOSTS: data_provider,localhost,127.0.0.1,*
     depends_on:
       - postgres
       - redis
     networks:
-      - app_network
+      app_network:
+        ipv4_address: 172.19.0.4
 
   dashboard_service:
     build:
@@ -52,7 +54,6 @@ services:
       - "8101:8101"
     environment:
       DATABASE_URL: postgres://postgres:postgres@postgres:5432/postgres
-      DATA_PROVIDER_URL: http://data_provider:8100
       CELERY_BROKER_URL: redis://redis:6379/0
     depends_on:
       - postgres
@@ -71,7 +72,6 @@ services:
       - ./dashboard_service:/app
     environment:
       DATABASE_URL: postgres://postgres:postgres@postgres:5432/postgres
-      DATA_PROVIDER_URL: http://data_provider:8100
       CELERY_BROKER_URL: redis://redis:6379/0
     depends_on:
       - postgres
@@ -86,3 +86,6 @@ volumes:
 networks:
   app_network:
     driver: bridge
+    ipam:
+      config:
+       - subnet: 172.19.0.0/16
